@@ -1,7 +1,6 @@
 import pygame
 import random
 import os
-import motion
 
 # teste de execução do jogo
 try:
@@ -29,7 +28,7 @@ blue = (0, 0, 255)
 player_x = 300
 player_y = 400
 player_spryte = pygame.image.load(
-    "sprites/yellowbird-midflap.png").convert_alpha()
+    "sprites/spr_bilu1.png").convert_alpha()
 angles = [0, 45, 90, 135, 180, 225, 270, 315, 360]
 angle = 0
 exit = True
