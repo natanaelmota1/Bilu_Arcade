@@ -28,8 +28,8 @@ blue = (0, 0, 255)
 player_x = 300
 player_y = 400
 player_spryte = pygame.image.load("sprites/yellowbird-midflap.png").convert_alpha()
-ang = [0,45,90,135,180,225,270,315,360]
-player_spryte = pygame.transform.rotate(player_spryte, ang[5])
+angles = [0,45,90,135,180,225,270,315,360]
+angle = 0
 exit = True
 
 while(exit):
@@ -46,13 +46,18 @@ while(exit):
     key = pygame.key.get_pressed()
     if key[pygame.K_w]:
         player_y -= 10
+        angle = 2
     if key[pygame.K_s]:
         player_y += 10
+        angle = 6
     if key[pygame.K_a]:
         player_x -= 10
+        angle = 4
     if key[pygame.K_d]:
         player_x += 10
-
+        angle = 0
+    
+    player_spryte = pygame.transform.rotate(player_spryte, angles[angle])
     player = screen.blit(player_spryte, (player_x, player_y))
     pygame.display.update()
     screen.fill(white)
