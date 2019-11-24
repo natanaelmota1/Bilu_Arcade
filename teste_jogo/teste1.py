@@ -1,6 +1,8 @@
 import pygame
 import random
 import os
+import sys
+import math
 
 # teste de execução do jogo
 try:
@@ -23,6 +25,10 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+
+# Teste
+mouse_c = ('sprites/target.jpg')
+mousec = pygame.image.load(mouse_c).convert_alpha()
 
 # parâmetros do player
 player_x = 300
@@ -53,8 +59,13 @@ while(exit):
         player_x -= 10
     if key[pygame.K_d] or key[pygame.K_RIGHT]:
         player_x += 10
-
-    player = screen.blit(player_spryte, (player_x, player_y))
+    # Teste
+    pos = pygame.mouse.get_pos()
+    screen.blit(mousec, (pos))
+    angle = 360-math.atan2(pos[1]-300,pos[0]-400)*180/math.pi
+    rotimage = pygame.transform.rotate(player_spryte,angle)
+    rect = rotimage.get_rect(center=(player_x, player_y))
+    player = screen.blit(rotimage,rect)
     pygame.display.update()
     screen.fill(white)
     FPS.tick(25)
