@@ -35,6 +35,8 @@ player_sprite = pygame.image.load("sprites/spr_bilu1.png").convert_alpha()
 mousec = pygame.image.load('sprites/target2.png').convert_alpha()
 pygame.mouse.set_visible(False)
 
+wall_rect = pygame.Rect(200,150,40,40)
+
 while(exit):
 
     # Condição de saída
@@ -63,7 +65,14 @@ while(exit):
     rotimage = pygame.transform.rotate(player_sprite, angle)
     rect = rotimage.get_rect(center=(player_x, player_y))
 
+    wall = pygame.draw.rect(screen, white, [160, 120, 40, 40])
     player = screen.blit(rotimage, rect)
+    player_rect = pygame.Rect(player_x, player_y, 50, 50)
+
+    if wall_rect.colliderect(player_rect) > 0:
+        player_x -=20
+        player_y -=20
+    
     pygame.display.update()
     screen.blit(background, (0, 0))
     FPS.tick(25)
