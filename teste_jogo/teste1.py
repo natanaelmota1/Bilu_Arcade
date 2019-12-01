@@ -35,7 +35,8 @@ player_y = 300
 player_sprite = pygame.image.load("sprites/spr_bilu.png").convert_alpha()
 mousec = pygame.image.load('sprites/target2.png').convert_alpha()
 pygame.mouse.set_visible(False)
-enemy_x, enemy_y = 114, 365
+enemy_pos = []
+time = 0
 
 while(exit):
 
@@ -59,15 +60,22 @@ while(exit):
         player_x += 10
     
     # Geração inimigos
-    if player_x > enemy_x:
-        enemy_x += 3
-    if player_x < enemy_x:
-        enemy_x -= 3
-    if player_y > enemy_y:
-        enemy_y += 3
-    if player_y < enemy_y:
-        enemy_y -= 3
-    enemy_generate (screen, player_x, player_y, enemy_x, enemy_y)
+    time += 1
+    if (time % 50 == 0):
+        positions = [[100, 100], [100, 550], [700, 100], [700, 550]]
+        position = positions[random.randrange(3)]
+        enemy_pos.append(position)
+
+    for i in range(len(enemy_pos)):
+        if player_x > enemy_pos[i][0]:
+            enemy_pos[i][0] += 3
+        if player_x < enemy_pos[i][0]:
+            enemy_pos[i][0] -= 3
+        if player_y > enemy_pos[i][1]:
+            enemy_pos[i][1] += 3
+        if player_y < enemy_pos[i][1]:
+            enemy_pos[i][1] -= 3
+        enemy_generate (screen, player_x, player_y, enemy_pos[i][0], enemy_pos[i][1])
 
     # Mira do player
     pos = pygame.mouse.get_pos()
