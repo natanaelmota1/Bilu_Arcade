@@ -13,7 +13,7 @@ except:
 
 # Parâmetros da tela
 width = 800
-height = 650
+height = 700
 
 # Interface
 screen = pygame.display.set_mode((width, height))
@@ -36,6 +36,7 @@ player_sprite = pygame.image.load("sprites/spr_bilu.png").convert_alpha()
 mousec = pygame.image.load('sprites/target2.png').convert_alpha()
 pygame.mouse.set_visible(False)
 enemy_pos = []
+enemys = []
 time = 0
 
 while(exit):
@@ -47,6 +48,12 @@ while(exit):
                 exit = False
         if (event.type == pygame.QUIT):
             exit = False
+        for i in range(len(enemy_pos)):
+            pos_mouse = pygame.mouse.get_pos()
+            mousec_rect = pygame.Rect(pos_mouse[0], pos_mouse[1], 10, 10)
+            if mousec_rect.colliderect(enemys[i]) > 0:
+                if event.type == pygame.MOUSEBUTTONUP:
+                    enemy_pos.pop(i)
 
     # Movimentação do player
     key = pygame.key.get_pressed()
@@ -61,10 +68,11 @@ while(exit):
     
     # Geração inimigos
     time += 1
-    if (time % 50 == 0):
-        positions = [[100, 100], [100, 550], [700, 100], [700, 550]]
-        position = positions[random.randrange(3)]
+    if (time % 20 == 0):
+        positions = [[100, 150], [100, 600], [700, 150], [700, 600]]
+        position = positions[random.randrange(4)]
         enemy_pos.append(position)
+        enemys.append(0)
 
     for i in range(len(enemy_pos)):
         if player_x > enemy_pos[i][0]:
@@ -76,25 +84,27 @@ while(exit):
         if player_y < enemy_pos[i][1]:
             enemy_pos[i][1] -= 3
         enemy_generate (screen, player_x, player_y, enemy_pos[i][0], enemy_pos[i][1])
+        enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 50, 50)
 
     # Mira do player
-    pos = pygame.mouse.get_pos()
-    screen.blit(mousec, (pos))
-    angle = 360-math.atan2(pos[1]-player_y, pos[0]-player_x)*180/math.pi
+    pos_mouse = pygame.mouse.get_pos()
+    screen.blit(mousec, (pos_mouse))
+    angle = 360-math.atan2(pos_mouse[1]-player_y, pos_mouse[0]-player_x)*180/math.pi
     rotimage = pygame.transform.rotate(player_sprite, angle)
     rect = rotimage.get_rect(center=(player_x, player_y))
     player = screen.blit(rotimage, rect)
+
           
     # Colisão parede
-    if player_y >= 600:
-        player_y = 600 
-    if player_y <= 50:
-        player_y = 50
+    if player_y >= 650:
+        player_y = 650 
+    if player_y <= 100:
+        player_y = 100
     if player_x >= 750:
         player_x = 750
     if player_x <= 50:
         player_x = 50
         
     pygame.display.update()
-    screen.blit(background, (0, 0))
+    screen.blit(background, (0, 50))
     FPS.tick(25)
