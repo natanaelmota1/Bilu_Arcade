@@ -1,5 +1,6 @@
 import pygame
 
+
 # Função para tocar um som
 def play_sound(sound):
     effect = pygame.mixer.Sound(sound)
