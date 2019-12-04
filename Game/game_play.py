@@ -3,14 +3,14 @@ import random
 import os
 import sys
 import math
-from sprites import enemy_generate, player_generate, lives_generate, portal
+from sprites import*
 
 
 def game():
     # Teste de execução do jogo
     try:
         pygame.init()
-    except:
+    except ImportError:
         print('O módulo pygame não foi inicializado com sucesso')
 
     # Parâmetros da tela
@@ -23,13 +23,14 @@ def game():
     FPS = pygame.time.Clock()
     background = pygame.image.load("sprites/background.png").convert()
     hud = pygame.image.load("sprites/hud.png").convert()
+    knowledge = pygame.image.load("sprites/brain.png").convert_alpha()
     exit = True
 
     # Definindo cores
     white = (255, 255, 255)
     black = (0, 0, 0)
     red = (255, 0, 0)
-    green = (0, 255, 0)
+    green = (0, 128, 0)
     blue = (0, 0, 255)
 
     # Parâmetros do player
@@ -41,7 +42,9 @@ def game():
     enemys = []
     time = 0
     lives = 5
-    position = 0
+    knowledge_pos = []
+    knowledge_rects = []
+    score = 0
 
     while(exit):
 
@@ -60,8 +63,10 @@ def game():
             # Tiro nos inimigos
             i = 0
             while i < len(enemy_pos):
-                if (mouse_pos[0] >= enemy_pos[i][0]-20 and mouse_pos[0] <= enemy_pos[i][0] + 20 and
-                        mouse_pos[1] >= enemy_pos[i][1]-20 and mouse_pos[1] <= enemy_pos[i][1] + 20):
+                if (mouse_pos[0] >= enemy_pos[i][0]-20 and
+                    mouse_pos[0] <= enemy_pos[i][0]+20 and
+                    mouse_pos[1] >= enemy_pos[i][1]-20 and
+                        mouse_pos[1] <= enemy_pos[i][1]+20):
                     if event.type == pygame.MOUSEBUTTONUP:
                         enemy_pos.pop(i)
                         enemys.pop(i)
@@ -87,7 +92,7 @@ def game():
             enemy_pos.append(position)
             enemys.append(0)
             position = 0
-        
+
         for i in range(len(enemy_pos)):
             if player_x > enemy_pos[i][0] and enemy_pos[i][0] < player_x - 30:
                 enemy_pos[i][0] += 3
@@ -101,6 +106,17 @@ def game():
                            enemy_pos[i][0], enemy_pos[i][1])
             enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 40, 40)
 
+        # Geração do conhecimento
+        if time % 60 == 0:
+            pos = [random.randrange(200, 600, 20),
+                   random.randrange(200, 500, 20)]
+            knowledge_pos.append(pos)
+            knowledge_rects.append(0)
+        for i in range(len(knowledge_pos)):
+            screen.blit(knowledge, (knowledge_pos[i][0], knowledge_pos[i][1]))
+            knowledge_rects[i] = pygame.Rect(
+                knowledge_pos[i][0], knowledge_pos[i][1], 30, 30)
+
         # Geração do player
         player_generate(screen, player_x, player_y, mousec, mouse_pos)
 
@@ -113,7 +129,7 @@ def game():
             player_x = 750
         if player_x <= 50:
             player_x = 50
-        
+
         for i in range(len(enemy_pos)):
             if enemy_pos[i][0] >= 750:
                 enemy_pos[i][0] = 750
@@ -124,7 +140,7 @@ def game():
             if enemy_pos[i][1] <= 100:
                 enemy_pos[i][1] = 100
 
-        # Colisão player com inimigo
+        # Vidas
         for i in range(len(enemys)):
             if player_rect.colliderect(enemys[i]):
                 if enemy_pos[i][0] > player_x:
@@ -136,14 +152,29 @@ def game():
                 if enemy_pos[i][1] < player_y:
                     enemy_pos[i][1] -= 50
                 lives -= 1
-
         if lives < 1:
             exit = False
 
+        # Pontuação
+        i = 0
+        while i < len(knowledge_pos):
+            if player_rect.colliderect(knowledge_rects[i]):
+                knowledge_pos.pop(i)
+                score += 10
+            i += 1
+
+        # Hud
+        write_text(screen, "LIVES:", green, 10, 10, "stencil", 35)
         lives_generate(screen, lives)
+        write_text(screen, "KNOWLEDGE:", green, 400, 10, "stencil", 35)
+        write_text(screen, "{0:>15}".format(score),
+                   white, 600, 10, "stencil", 40)
+
         pygame.display.update()
         screen.blit(background, (0, 0))
         screen.blit(hud, (0, 0))
+        screen.blit(knowledge, (750, 10))
         FPS.tick(25)
+
 
 game()

@@ -25,18 +25,26 @@ def lives_generate(screen, lives):
         "sprites/spr_bilulife1.png").convert_alpha()
     lives_posx = 100
     for i in range(lives):
-        screen.blit(lives_sprite, (lives_posx, 20))
+        screen.blit(lives_sprite, (lives_posx, 10))
         lives_posx += 20
 
 
 def portal(screen):
     positions = [[5, 50], [5, 620], [720, 50], [720, 620]]
-    for i in range (len(positions)):
+    for i in range(len(positions)):
         if positions[i] == [720, 620] or positions[i] == [5, 50]:
-            portal_sprite = pygame.image.load("sprites/portal.png").convert_alpha()
+            portal_sprite = pygame.image.load(
+                "sprites/portal.png").convert_alpha()
             portal_sprite = pygame.transform.rotate(portal_sprite, 225)
             screen.blit(portal_sprite, (positions[i][0], positions[i][1]))
         else:
-            portal_sprite = pygame.image.load("sprites/portal.png").convert_alpha()
+            portal_sprite = pygame.image.load(
+                "sprites/portal.png").convert_alpha()
             portal_sprite = pygame.transform.rotate(portal_sprite, 135)
             screen.blit(portal_sprite, (positions[i][0], positions[i][1]))
+
+
+def write_text(screen, text, color, posx, posy, font, size):
+    font = pygame.font.SysFont(font, size)
+    text1 = font.render(text, True, color)
+    screen.blit(text1, [posx, posy])
