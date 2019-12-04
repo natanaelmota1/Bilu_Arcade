@@ -3,7 +3,7 @@ import random
 import os
 import sys
 import math
-from sprites import enemy_generate, player_generate, lives_generate, count_lives
+from sprites import enemy_generate, player_generate, lives_generate
 
 
 def game():
@@ -55,7 +55,7 @@ def game():
                     exit = False
             if (event.type == pygame.QUIT):
                 exit = False
-            
+
             # Tiro nos inimigos
             i = 0
             while i < len(enemy_pos):
@@ -95,7 +95,7 @@ def game():
                 enemy_pos[i][1] -= 3
             enemy_generate(screen, player_x, player_y,
                            enemy_pos[i][0], enemy_pos[i][1])
-            enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 50, 50)
+            enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 40, 40)
 
         # Geração do player
         player_generate(screen, player_x, player_y, mousec, mouse_pos)
@@ -110,19 +110,36 @@ def game():
         if player_x <= 50:
             player_x = 50
         
+        for i in range(len(enemy_pos)):
+            if enemy_pos[i][0] >= 750:
+                enemy_pos[i][0] = 750
+            if enemy_pos[i][0] <= 50:
+                enemy_pos[i][0] = 50
+            if enemy_pos[i][1] >= 650:
+                enemy_pos[i][1] = 650
+            if enemy_pos[i][1] <= 100:
+                enemy_pos[i][1] = 100
+
         # Colisão player com inimigo
         for i in range(len(enemys)):
             if player_rect.colliderect(enemys[i]):
-                lives = count_lives(lives, time)
-        
+                if enemy_pos[i][0] > player_x:
+                    enemy_pos[i][0] += 50
+                if enemy_pos[i][0] < player_x:
+                    enemy_pos[i][0] -= 50
+                if enemy_pos[i][1] > player_y:
+                    enemy_pos[i][1] += 50
+                if enemy_pos[i][1] < player_y:
+                    enemy_pos[i][1] -= 50
+                lives -= 1
+
         if lives < 1:
             exit = False
-        
-        lives_generate (screen, lives)
+
+        lives_generate(screen, lives)
         pygame.display.update()
         screen.blit(background, (0, 50))
         screen.blit(hud, (0, 0))
         FPS.tick(25)
-
 
 game()
