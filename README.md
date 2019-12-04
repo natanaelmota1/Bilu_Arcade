@@ -1,4 +1,18 @@
 # Bilu's_Arcade
+## Sobre o jogo
+O personagem principal é o ET Bilu, onde ele precisa conseguir o máximo de conhecimento possível. Para conseguir o conhecimento, ele precisará sobreviver às ondas de ETs grays que aparecerão para atrapalhá-lo.
+
+## Gameplay
+Jogo arcade onde o objetivo é conseguir maior pontuação possível. Os pontos são obtidos ao coletar cérebros que representam o conhecimento. Para sobreviver aos ETs inimigos é possível derrotá-los atirando neles.
+
+## Controles
+- W/Up: mover para cima
+- S/Down: mover para baixo
+- A/Left: mover para esquerda
+- D/Right: mover para direita
+- mouse: mirar e atirar nos inimigos
+
+## Credits
 ### UNIVERSIDADE DO ESTADO DO AMAZONAS - UEA
 ### BACHARELADO EM SISTEMAS DE INFORMAÇÃO
 ### LABORATÓRIO DE PROGRAMAÇÃO DE COMPUTADORES
