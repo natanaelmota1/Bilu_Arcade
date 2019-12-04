@@ -5,6 +5,10 @@ O personagem principal é o ET Bilu, onde ele precisa conseguir o máximo de con
 ## Gameplay
 Jogo arcade onde o objetivo é conseguir maior pontuação possível. Os pontos são obtidos ao coletar cérebros que representam o conhecimento. Para sobreviver aos ETs inimigos é possível derrotá-los atirando neles. Quando encosta em um inimigo, perde vida. Ao ficar sem vidas, o jogo acaba.
 
+![screenshot](https://github.com/natanaelmota1/Bilu_Arcade/blob/master/Game/Screenshots/bilu_arcade1.png)
+![screenshot](https://github.com/natanaelmota1/Bilu_Arcade/blob/master/Game/Screenshots/bilu_arcade2.png)
+![screenshot](https://github.com/natanaelmota1/Bilu_Arcade/blob/master/Game/Screenshots/bilu_arcade3.png)
+
 ## Controles
 - W/Up: mover para cima
 - S/Down: mover para baixo
