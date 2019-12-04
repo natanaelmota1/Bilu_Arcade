@@ -44,6 +44,7 @@ def game():
     red = (255, 0, 0)
     green = (0, 128, 0)
     blue = (0, 0, 255)
+    midnight_blue = (20, 20, 90)
 
     # Parâmetros do player
     player_x = 400
@@ -98,6 +99,17 @@ def game():
         if key[pygame.K_d] or key[pygame.K_RIGHT]:
             player_x += 10
 
+        # Geração do conhecimento
+        if time % 70 == 0:
+            pos = [random.randrange(200, 600, 20),
+                   random.randrange(200, 500, 20)]
+            knowledge_pos.append(pos)
+            knowledge_rects.append(0)
+        for i in range(len(knowledge_pos)):
+            screen.blit(knowledge, (knowledge_pos[i][0], knowledge_pos[i][1]))
+            knowledge_rects[i] = pygame.Rect(
+                knowledge_pos[i][0], knowledge_pos[i][1], 30, 30)
+
         # Geração inimigos
         time += 1
         portal(screen)
@@ -120,17 +132,6 @@ def game():
             enemy_generate(screen, player_x, player_y,
                            enemy_pos[i][0], enemy_pos[i][1])
             enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 40, 40)
-
-        # Geração do conhecimento
-        if time % 70 == 0:
-            pos = [random.randrange(200, 600, 20),
-                   random.randrange(200, 500, 20)]
-            knowledge_pos.append(pos)
-            knowledge_rects.append(0)
-        for i in range(len(knowledge_pos)):
-            screen.blit(knowledge, (knowledge_pos[i][0], knowledge_pos[i][1]))
-            knowledge_rects[i] = pygame.Rect(
-                knowledge_pos[i][0], knowledge_pos[i][1], 30, 30)
 
         # Geração do player
         player_generate(screen, player_x, player_y, mousec, mouse_pos)
@@ -169,14 +170,18 @@ def game():
                 lives -= 1
                 play_sound(hit_sound)
         if lives < 1:
+            screen.fill(midnight_blue)
             write_text(screen, "GAME OVER", white,
                        (width/2)-180, (height/2)-25, "stencil", 80)
+            write_text(screen, "KNOWLEDGE: {}".format(score), white,
+                       (width/2)-220, (height/2)+50, "stencil", 60)
             pygame.display.update()
             pygame.mixer.quit()
             pygame.mixer.init(44100, -16, 2, 512)
             play_song(game_over)
             sleep(14)
             exit = False
+            return(True)
 
         # Pontuação
         i = 0
@@ -190,9 +195,9 @@ def game():
         # Hud
         write_text(screen, "LIVES:", green, 10, 10, "stencil", 35)
         lives_generate(screen, lives)
-        write_text(screen, "KNOWLEDGE:", green, 400, 10, "stencil", 35)
-        write_text(screen, "{0:>15}".format(score),
-                   white, 600, 10, "stencil", 40)
+        write_text(screen, "KNOWLEDGE:", green, 350, 10, "stencil", 35)
+        write_text(screen, "{:0>12}".format(score),
+                   white, 530, 10, "stencil", 40)
 
         pygame.display.update()
         screen.blit(background, (0, 0))

@@ -42,7 +42,7 @@ def menu():
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Bilu's Arcade")
     FPS = pygame.time.Clock()
-    background = pygame.image.load("sprites/menu_background.jpg").convert()
+    background = pygame.image.load("sprites/menu_background.png").convert()
 
     on_menu = True
 
@@ -59,7 +59,8 @@ def menu():
                 if event.key == pygame.K_RETURN and rect_pos_y == height1:
                     pygame.mixer.quit()
                     on_menu = False
-                    game()
+                    if game():
+                        menu()
                 if event.key == pygame.K_RETURN and rect_pos_y == height2:
                     credit()
 
