@@ -3,10 +3,22 @@ import random
 import os
 import sys
 import math
-from sprites import*
+from sprites import *
+from sounds import *
+from time import sleep
 
 
 def game():
+    # Inicialização do módulo de música e sons
+    pygame.mixer.pre_init(48000, -16, 2, 512)
+
+    # Variáveis com os nomes das músicas e sons
+    knowledge_sound = "sounds/conhecimento.ogg"
+    hit_sound = "sounds/hit.ogg"
+    shot_sound = "sounds/shot.ogg"
+    game_song = "sounds/game_song.mp3"
+    game_over = "sounds/game_over.mp3"
+
     # Teste de execução do jogo
     try:
         pygame.init()
@@ -46,6 +58,8 @@ def game():
     knowledge_rects = []
     score = 0
 
+    # Tocar música
+    play_song(game_song)
     while(exit):
 
         # Alguns parêmtros
@@ -70,6 +84,7 @@ def game():
                     if event.type == pygame.MOUSEBUTTONUP:
                         enemy_pos.pop(i)
                         enemys.pop(i)
+                        play_sound(shot_sound)
                 i += 1
 
         # Movimentação do player
@@ -86,7 +101,7 @@ def game():
         # Geração inimigos
         time += 1
         portal(screen)
-        if (time % 30 == 0):
+        if (time % 40 == 0):
             positions = [[60, 80], [60, 640], [740, 80], [740, 640]]
             position = positions[random.randrange(4)]
             enemy_pos.append(position)
@@ -107,7 +122,7 @@ def game():
             enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 40, 40)
 
         # Geração do conhecimento
-        if time % 60 == 0:
+        if time % 70 == 0:
             pos = [random.randrange(200, 600, 20),
                    random.randrange(200, 500, 20)]
             knowledge_pos.append(pos)
@@ -152,6 +167,7 @@ def game():
                 if enemy_pos[i][1] < player_y:
                     enemy_pos[i][1] -= 50
                 lives -= 1
+                play_sound(hit_sound)
         if lives < 1:
             exit = False
 
@@ -161,6 +177,7 @@ def game():
             if player_rect.colliderect(knowledge_rects[i]):
                 knowledge_pos.pop(i)
                 score += 10
+                play_sound(knowledge_sound)
             i += 1
 
         # Hud
