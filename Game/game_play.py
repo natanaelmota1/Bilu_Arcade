@@ -5,11 +5,12 @@ import sys
 import math
 from sprites import enemy_generate, player_generate
 
+
 def game():
     # Teste de execução do jogo
     try:
         pygame.init()
-    except:
+    except ImportError:
         print('O módulo pygame não foi inicializado com sucesso')
 
     # Parâmetros da tela
@@ -45,7 +46,7 @@ def game():
         # Alguns parêmtros
         mouse_pos = pygame.mouse.get_pos()
         mousec_rect = pygame.Rect(mouse_pos[0], mouse_pos[1], 10, 10)
-        
+
         # Condição de saída
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -68,7 +69,7 @@ def game():
             player_x -= 10
         if key[pygame.K_d] or key[pygame.K_RIGHT]:
             player_x += 10
-        
+
         # Geração inimigos
         time += 1
         if (time % 20 == 0):
@@ -87,25 +88,27 @@ def game():
             if player_y < enemy_pos[i][1] and enemy_pos[i][1] > player_y + 30:
                 enemy_pos[i][1] -= 3
 
-            enemy_generate (screen, player_x, player_y, enemy_pos[i][0], enemy_pos[i][1])
+            enemy_generate(screen, player_x, player_y,
+                           enemy_pos[i][0], enemy_pos[i][1])
             enemys[i] = pygame.Rect(enemy_pos[i][0], enemy_pos[i][1], 50, 50)
 
         # Mira do player
-        player_generate (screen, player_x, player_y, mousec, mouse_pos)
+        player_generate(screen, player_x, player_y, mousec, mouse_pos)
 
         # Colisão parede
         if player_y >= 650:
-            player_y = 650 
+            player_y = 650
         if player_y <= 100:
             player_y = 100
         if player_x >= 750:
             player_x = 750
         if player_x <= 50:
             player_x = 50
-            
+
         pygame.display.update()
         screen.blit(background, (0, 50))
         screen.blit(hud, (0, 0))
         FPS.tick(25)
+
 
 game()
