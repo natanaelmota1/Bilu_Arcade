@@ -1,8 +1,5 @@
 import pygame
 
-# Variáveis com os nomes e o diretório dos sons
-
-
 # Função para tocar um som
 def play_sound(sound):
     effect = pygame.mixer.Sound(sound)
