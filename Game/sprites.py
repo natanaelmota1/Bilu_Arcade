@@ -27,3 +27,16 @@ def lives_generate(screen, lives):
     for i in range(lives):
         screen.blit(lives_sprite, (lives_posx, 20))
         lives_posx += 20
+
+
+def portal(screen):
+    positions = [[5, 50], [5, 620], [720, 50], [720, 620]]
+    for i in range (len(positions)):
+        if positions[i] == [720, 620] or positions[i] == [5, 50]:
+            portal_sprite = pygame.image.load("sprites/portal.png").convert_alpha()
+            portal_sprite = pygame.transform.rotate(portal_sprite, 225)
+            screen.blit(portal_sprite, (positions[i][0], positions[i][1]))
+        else:
+            portal_sprite = pygame.image.load("sprites/portal.png").convert_alpha()
+            portal_sprite = pygame.transform.rotate(portal_sprite, 135)
+            screen.blit(portal_sprite, (positions[i][0], positions[i][1]))

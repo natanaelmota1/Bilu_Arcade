@@ -3,7 +3,7 @@ import random
 import os
 import sys
 import math
-from sprites import enemy_generate, player_generate, lives_generate
+from sprites import enemy_generate, player_generate, lives_generate, portal
 
 
 def game():
@@ -21,7 +21,7 @@ def game():
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Bilu's Arcade")
     FPS = pygame.time.Clock()
-    background = pygame.image.load("sprites/bac_area51.png").convert()
+    background = pygame.image.load("sprites/background.png").convert()
     hud = pygame.image.load("sprites/hud.png").convert()
     exit = True
 
@@ -41,6 +41,7 @@ def game():
     enemys = []
     time = 0
     lives = 5
+    position = 0
 
     while(exit):
 
@@ -79,11 +80,14 @@ def game():
 
         # Geração inimigos
         time += 1
-        if (time % 20 == 0):
-            positions = [[100, 150], [100, 600], [700, 150], [700, 600]]
+        portal(screen)
+        if (time % 30 == 0):
+            positions = [[60, 80], [60, 640], [740, 80], [740, 640]]
             position = positions[random.randrange(4)]
             enemy_pos.append(position)
             enemys.append(0)
+            position = 0
+        
         for i in range(len(enemy_pos)):
             if player_x > enemy_pos[i][0] and enemy_pos[i][0] < player_x - 30:
                 enemy_pos[i][0] += 3
@@ -138,7 +142,7 @@ def game():
 
         lives_generate(screen, lives)
         pygame.display.update()
-        screen.blit(background, (0, 50))
+        screen.blit(background, (0, 0))
         screen.blit(hud, (0, 0))
         FPS.tick(25)
 
