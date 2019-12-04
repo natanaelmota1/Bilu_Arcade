@@ -175,6 +175,3 @@ def game():
         screen.blit(hud, (0, 0))
         screen.blit(knowledge, (750, 10))
         FPS.tick(25)
-
-
-game()

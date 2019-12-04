@@ -57,8 +57,9 @@ def menu():
                 on_menu = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN and rect_pos_y == height1:
-                    game()
+                    pygame.mixer.quit()
                     on_menu = False
+                    game()
                 if event.key == pygame.K_RETURN and rect_pos_y == height2:
                     credit()
 
@@ -69,11 +70,11 @@ def menu():
         pygame.draw.rect(screen, blue, [rect_pos_x, rect_pos_y, 200, 70], 3)
         key = pygame.key.get_pressed()
         if key[pygame.K_UP]:
+            play_sound(selection)
             rect_pos_y = height1
-            play_sound(selection)
         if key[pygame.K_DOWN]:
-            rect_pos_y = height2
             play_sound(selection)
+            rect_pos_y = height2
         write_text("PLAY", white, (width/2)-71, (height/2)-25, "stencil", 80)
         write_text("CREDITS", white, (width/2)-88.5,
                    (height/2)+55, "stencil", 59)
