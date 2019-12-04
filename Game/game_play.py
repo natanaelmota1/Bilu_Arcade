@@ -109,6 +109,3 @@ def game():
         screen.blit(background, (0, 50))
         screen.blit(hud, (0, 0))
         FPS.tick(25)
-
-
-
