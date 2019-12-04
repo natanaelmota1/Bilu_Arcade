@@ -33,7 +33,7 @@ def game():
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Bilu's Arcade")
     FPS = pygame.time.Clock()
-    background = pygame.image.load("sprites/background.png").convert()
+    background = pygame.image.load("sprites/background.png").convert_alpha()
     hud = pygame.image.load("sprites/hud.png").convert()
     knowledge = pygame.image.load("sprites/brain.png").convert_alpha()
     exit = True
@@ -169,6 +169,13 @@ def game():
                 lives -= 1
                 play_sound(hit_sound)
         if lives < 1:
+            write_text(screen, "GAME OVER", white,
+                       (width/2)-180, (height/2)-25, "stencil", 80)
+            pygame.display.update()
+            pygame.mixer.quit()
+            pygame.mixer.init(44100, -16, 2, 512)
+            play_song(game_over)
+            sleep(14)
             exit = False
 
         # Pontuação

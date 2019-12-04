@@ -80,5 +80,7 @@ def credit():
                    white, 5, 535, "stencil", 35)
         write_text("Portal: https://br.pinterest.com/pin/740490363705675693/",
                    white, 5, 560, "stencil", 35)
+        write_text("PRESS ESC OR CLOSE ON THE X BUTTON TO RETURN TO MENU",
+                   white, 5, 650, "stencil", 35)
         pygame.display.update()
         FPS.tick(25)
