@@ -15,7 +15,9 @@ Jogo arcade onde o objetivo é conseguir maior pontuação possível. Os pontos 
 - A/Left: mover para esquerda
 - D/Right: mover para direita
 - mouse: mirar e atirar nos inimigos
-
+## Requisitos para rodar o jogo:
+Python 3.6.8+
+Biblioteca Pygame
 ## Credits
 ### UNIVERSIDADE DO ESTADO DO AMAZONAS - UEA
 ### BACHARELADO EM SISTEMAS DE INFORMAÇÃO
