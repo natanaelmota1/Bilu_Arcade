@@ -19,17 +19,22 @@ Jogo arcade onde o objetivo é conseguir maior pontuação possível. Os pontos 
 - Python 3.6.8+
 - Pip3 ou pip
 - Biblioteca Pygame
-###Instalar Python 3.6.8+
-####Linux:
+-Instalar Python 3.6.8+
+##Linux:
+
 -https://python.org.br/instalacao-linux/
-####Windows:
+
+##Windows:
+
 -https://python.org.br/instalacao-windows/
-###Instalar a biblioteca Pygame:
-####Windows:
+
+##Instalar a biblioteca Pygame:
+
+##Windows:
 -Acesse a pasta local onde o Python foi instalado
 -Abra o cmd usando shift e botão direito do mouse
 -Escreva o comando: python -m pip install -U pygame
-####Linux:
+-Linux:
 -Abra o terminal
 -Escreva o comando: pip3 install pygame
 
